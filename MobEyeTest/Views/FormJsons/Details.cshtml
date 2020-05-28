@@ -1,0 +1,77 @@
+﻿@model MobEyeTest.Models.FormJson
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>FormJson</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FormName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FormName)
+        </dd>
+    </dl>
+</div>
+<div>
+
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+          <input type="submit" value="Submit" />
+        }
+
+    //<form class="form"></form>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //var data = @Model.FormName;
+        var data2=@Html.Raw((Model.FormName));
+        //$('form1').jsonForm({
+        //    "schema": data2
+        //});
+        data2.form.forEach(myFunction);
+
+        function myFunction(item, index) {
+            if (item.type == "text") {
+                //$('form').append('<label  /><br />').text(item.value);
+                $('form').append(item.label,' <br /><input type="textbox"/><br />').add();
+                
+            }
+            if (item.type == "radio") {
+                $('form').append(`${item.label}<br />`);
+                for (var value of item.options) {
+                    $('form').append(`<input type="radio" id="${value}"  value="${value}">`)
+                        .append(`<label for="${value}">${value}</label></div>`);
+
+                }
+                $('form').append(`<br />`);
+            }
+            if (item.type == "checkbox") {
+                $('form').append(`${item.label}<br />`);
+                for (var value of item.options) {
+                    $('form').append(`<input type="checkbox" id="${value}"  value="${value}">`)
+                        .append(`<label for="${value}">${value}</label></div>`);
+
+                }
+                $('form').append(`<br />`);
+
+            }
+        }
+    });
+</script>
+@*<script>
+        $('form1').jsonForm({
+            "schema": model.FormName
+        });
+    </script>*@
