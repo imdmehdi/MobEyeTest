@@ -28,7 +28,7 @@ namespace MobEyeTest
             services.AddControllersWithViews();
 
             services.AddDbContext<MobEyeTestContext>(options =>
-                    options.UseSqlite(@"Data Source=c:\Users\mehdi.imam\source\repos\MobEyeTest\MobEyeTest\Sample.db"));
+                    options.UseSqlite(@"Data Source=~Sample.db"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
