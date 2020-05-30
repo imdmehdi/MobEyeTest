@@ -54,7 +54,7 @@ namespace MobEyeTest.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FormName")] FormJson formJson)
+        public async Task<IActionResult> Create([Bind("Id,FormContent")] FormJson formJson)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace MobEyeTest.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FormName")] FormJson formJson)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FormContent")] FormJson formJson)
         {
             if (id != formJson.Id)
             {

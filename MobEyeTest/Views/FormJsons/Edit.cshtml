@@ -14,9 +14,9 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="FormName" class="control-label"></label>
-                <input asp-for="FormName" class="form-control" />
-                <span asp-validation-for="FormName" class="text-danger"></span>
+                <label asp-for="FormContent" class="control-label"></label>
+                <textarea style="max-width;max-height" asp-for="FormContent" class="form-control" ></textarea>
+                <span asp-validation-for="FormContent" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

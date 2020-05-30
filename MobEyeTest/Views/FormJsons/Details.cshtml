@@ -1,31 +1,30 @@
 ﻿@model MobEyeTest.Models.FormJson
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "FormDisplay";
 }
 
-<h1>Details</h1>
+    <h1>Form Display</h1>
 
 <div>
     <h4>FormJson</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FormName)
+            @Html.DisplayNameFor(model => model.FormContent)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FormName)
+            @Html.DisplayFor(model => model.FormContent)
         </dd>
     </dl>
 </div>
 <div>
 
-    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
-        {
-          <input type="submit" value="Submit" />
-        }
+    <form >
 
-    //<form class="form"></form>
+        </form>
+
+
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
@@ -35,23 +34,22 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        //var data = @Model.FormName;
-        var data2=@Html.Raw((Model.FormName));
+        //var data = @Model.FormContent;
+        var data2=@Html.Raw((Model.FormContent));
         //$('form1').jsonForm({
         //    "schema": data2
         //});
         data2.form.forEach(myFunction);
-
+        $('form').append(`<input type="submit" />`);
         function myFunction(item, index) {
             if (item.type == "text") {
-                //$('form').append('<label  /><br />').text(item.value);
                 $('form').append(item.label,' <br /><input type="textbox"/><br />').add();
                 
             }
             if (item.type == "radio") {
                 $('form').append(`${item.label}<br />`);
                 for (var value of item.options) {
-                    $('form').append(`<input type="radio" id="${value}"  value="${value}">`)
+                    $('form').append(`<input type="radio" id="${value}" name="${item.label}"  value="${value}">`)
                         .append(`<label for="${value}">${value}</label></div>`);
 
                 }
@@ -60,18 +58,19 @@
             if (item.type == "checkbox") {
                 $('form').append(`${item.label}<br />`);
                 for (var value of item.options) {
-                    $('form').append(`<input type="checkbox" id="${value}"  value="${value}">`)
+                    $('form').append(`<input type="checkbox" id="${value}" name="${item.label}" value="${value}">`)
                         .append(`<label for="${value}">${value}</label></div>`);
 
                 }
                 $('form').append(`<br />`);
 
             }
+           
         }
     });
 </script>
 @*<script>
         $('form1').jsonForm({
-            "schema": model.FormName
+            "schema": model.FormContent
         });
     </script>*@
