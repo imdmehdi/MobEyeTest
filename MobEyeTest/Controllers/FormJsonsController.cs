@@ -149,5 +149,52 @@ namespace MobEyeTest.Controllers
         {
             return _context.FormJson.Any(e => e.Id == id);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SaveFormDetails([Bind("Id,FormContent")] FormJson formDetails)
+        {
+            FormDetails obj = new FormDetails();
+            obj.Id = formDetails.Id;
+            obj.FromDetailsEntered = formDetails.FormContent;
+            if (ModelState.IsValid)
+            {
+                _context.Add(obj);
+                await _context.SaveChangesAsync();
+                return View(obj);
+            }
+            return View(obj);
+        }
+        [HttpGet]
+        public async Task<IActionResult> SaveFormDetails()
+        {
+            return View(nameof(ListIndex), await _context.FormDetails.ToListAsync());
+        }
+        public async Task<IActionResult> ListIndex()
+        {
+            return View(await _context.FormDetails.ToListAsync());
+        }
+        public async Task<IActionResult> FormDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var formJson = await _context.FormDetails
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (formJson == null)
+            {
+                return NotFound();
+            }
+
+            return View(nameof(SaveFormDetails),formJson);
+
+        }
+
+
+       
+
+
     }
 }

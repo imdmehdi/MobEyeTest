@@ -1,0 +1,55 @@
+﻿@model MobEyeTest.Models.FormDetails
+
+@{
+    ViewData["Title"] = "SaveFormDetails";
+}
+
+<h4>Saved Form Details</h4>
+
+<div>
+    
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+           
+        </dt>
+        <dd class="col-sm-10">
+            <form >
+
+            </form>
+        </dd>
+    </dl>
+</div>
+<div>
+   
+    <a asp-action="ListIndex">Back to List</a>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function () {
+        var data2=@Html.Raw((Model.FromDetailsEntered));
+        
+        data2.form.forEach(myFunction);
+    function myFunction(item, index) {
+        if (item.type == "text" || item.type == "radio") {
+            $('form').append(`${item.label} :  ${item.options} <br />`);
+
+        }
+       
+        if (item.type == "checkbox") {
+            $('form').append(`${item.label} : `);
+            for (var value of item.options) {
+                $('form').append(`${value} , `);
+                  
+
+            }
+            $('form').append(`<br />`);
+
+        }
+
+    }
+
+     
+        });
+    </script>

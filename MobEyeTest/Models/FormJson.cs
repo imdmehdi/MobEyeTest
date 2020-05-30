@@ -11,6 +11,17 @@ namespace MobEyeTest.Models
         public int Id { get;set; }
         [DisplayName("Enter Form Content")]
         public string FormContent { get; set; }
+
+
     }
+
+    public class FormDetails
+    {
+        public int Id { get; set; }
+
+        public string FromDetailsEntered { get; set; }
+    }
+
+
 
 }

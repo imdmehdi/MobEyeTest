@@ -4,24 +4,18 @@
     ViewData["Title"] = "FormDisplay";
 }
 
-    <h1>Form Display</h1>
+    <h4>Form Display</h4>
 
 <div>
-    <h4>FormJson</h4>
+   
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FormContent)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FormContent)
-        </dd>
-    </dl>
+    
 </div>
 <div>
 
-    <form >
-
+    <form asp-action="SaveFormDetails" >
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.FormContent)
         </form>
 
 
@@ -34,23 +28,20 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        //var data = @Model.FormContent;
         var data2=@Html.Raw((Model.FormContent));
-        //$('form1').jsonForm({
-        //    "schema": data2
-        //});
+      
         data2.form.forEach(myFunction);
-        $('form').append(`<input type="submit" />`);
+        $('form').append(`<input type="submit" id="saveFormContent" />`);
         function myFunction(item, index) {
             if (item.type == "text") {
-                $('form').append(item.label,' <br /><input type="textbox"/><br />').add();
-                
+                $('form').append(item.label, ` <br /><input class="Question" type="textbox" name="${item.label}"/><br />`).add();
+
             }
             if (item.type == "radio") {
                 $('form').append(`${item.label}<br />`);
                 for (var value of item.options) {
-                    $('form').append(`<input type="radio" id="${value}" name="${item.label}"  value="${value}">`)
-                        .append(`<label for="${value}">${value}</label></div>`);
+                    $('form').append(`<input class="Question" type="radio" id="${value}" name="${item.label}"  value="${value}">`)
+                        .append(`<label for="${value}">${value}</label>`);
 
                 }
                 $('form').append(`<br />`);
@@ -58,19 +49,81 @@
             if (item.type == "checkbox") {
                 $('form').append(`${item.label}<br />`);
                 for (var value of item.options) {
-                    $('form').append(`<input type="checkbox" id="${value}" name="${item.label}" value="${value}">`)
-                        .append(`<label for="${value}">${value}</label></div>`);
+                    $('form').append(`<input class="Question" type="checkbox" id="${value}" name="${item.label}" value="${value}">`)
+                        .append(`<label for="${value}">${value}</label>`);
 
                 }
                 $('form').append(`<br />`);
 
             }
-           
+
         }
+
+        $("#saveFormContent").click(function () {
+         
+            var form = [];
+            var mainForm = {};
+            var id = @Html.Raw((Model.Id));
+
+            $("input[class=Question]").each(function () {
+
+                if ($(this)[0].type == 'text') {
+                    item = {}
+
+                    item["type"] = $(this)[0].type;
+                    item["label"] = $(this)[0].name;
+                    item["options"] = $(this)[0].value;
+                    form.push(item);
+
+
+                } else if ($(this)[0].type == 'radio' && $(this).is(":checked")) {
+                    item = {}
+
+                    item["type"] = $(this)[0].type;
+                    item["label"] = $(this)[0].name;
+
+
+                    item["options"] = $(this)[0].value;
+                    form.push(item);
+
+                } else if ($(this)[0].type == 'checkbox' && $(this).is(":checked")) {
+                    var isExists = false;
+                    var toMatch = $(this)[0].name;
+                    var valuetoFill = $(this)[0].value;
+                    $.each(form, function (key, value) {
+                        if (value.label == toMatch) {
+                            isExists = true;
+                            value.options.push(valuetoFill);
+
+                        }
+                       
+                    });
+                    if (isExists) {
+
+                    }
+                    else {
+                        item = {}
+
+                        item["type"] = $(this)[0].type;
+                        item["label"] = $(this)[0].name;
+
+                        var checkoptions = [];
+
+                        checkoptions.push($(this)[0].value);
+                        item["options"] = checkoptions;
+                        form.push(item);
+                    }
+                   
+                }
+
+
+            });
+            mainForm["form"]=form;
+            $('#Id').val(0);
+            $('#FormContent').val(JSON.stringify(mainForm));
+
+
+        });
     });
 </script>
-@*<script>
-        $('form1').jsonForm({
-            "schema": model.FormContent
-        });
-    </script>*@
+

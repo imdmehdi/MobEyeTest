@@ -4,9 +4,8 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h4>Edit Json</h4>
 
-<h4>FormJson</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,7 +14,7 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="FormContent" class="control-label"></label>
-                <textarea style="max-width;max-height" asp-for="FormContent" class="form-control" ></textarea>
+                <textarea style="width: 900px;height:400px" asp-for="FormContent" class="form-control" ></textarea>
                 <span asp-validation-for="FormContent" class="text-danger"></span>
             </div>
             <div class="form-group">

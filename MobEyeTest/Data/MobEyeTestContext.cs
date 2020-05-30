@@ -22,5 +22,7 @@ namespace MobEyeTest.Data
         }
 
         public DbSet<MobEyeTest.Models.FormJson> FormJson { get; set; }
+        public DbSet<MobEyeTest.Models.FormDetails> FormDetails { get; set; }
+
     }
 }
